@@ -1,0 +1,27 @@
+#!/bin/bash
+
+cd ~/Local\ Sites/$1/app/
+
+echo Installing Bedrock... Please Wait
+
+composer create-project roots/bedrock
+
+rm -rf public
+
+cd ~/Local\ Sites/$1/app/bedrock/web/wp/wp-content/
+
+rm -rf themes
+
+mkdir themes
+
+cd ~/Local\ Sites/$1/app/bedrock/web/app/themes
+
+composer create-project roots/sage $1
+
+composer require wpackagist-plugin/wordpress-seo
+
+code ~/Local\ Sites/$1/app/bedrock/.env && code ~/Local\ Sites/$1/conf/nginx/site.conf.hbs
+
+echo "****** Change "{{root}}"; To root "/Users/[yourUserNameHere]/Local Sites/projectname/app/bedrock/web"; ******"
+
+echo "****** Update .env With New DB and Domain Details ******"
